@@ -142,8 +142,8 @@ test('getPriceRange calculates min, max, average price', () => {
 
 test('generateMenuCaption creates formatted review article post', () => {
   const caption = generateMenuCaption(mockRestaurants[0]);
-  assert.match(caption, /\[REVIEW THỰC ĐƠN\] PHỞ BÒ HÀ NỘI/);
-  assert.match(caption, /THỰC ĐƠN CHI TIẾT & GIÁ CẢ/);
+  assert.match(caption, /\[ĐÁNH GIÁ QUÁN ĂN\] PHỞ BÒ HÀ NỘI/);
+  assert.match(caption, /THỰC ĐƠN & GIÁ CẢ/);
   assert.match(caption, /Phở tái lăn \(65\.000 ₫\)/);
   assert.match(caption, /LÝ DO ĐÁNH GIÁ/);
   assert.match(caption, /#Quánăn/);

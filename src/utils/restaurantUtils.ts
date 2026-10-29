@@ -126,22 +126,20 @@ export function generateMenuCaption(restaurant: Restaurant): string {
       : '⚪ TỆ (Không đề xuất ghé lại)';
 
   const lines: string[] = [];
-  lines.push(`🍲 [REVIEW THỰC ĐƠN] ${restaurant.name.toUpperCase()}`);
+  lines.push(`🍲 [ĐÁNH GIÁ QUÁN ĂN] ${restaurant.name.toUpperCase()}`);
   lines.push(`⭐ Đánh giá: ${ratingText}`);
   if (restaurant.address) {
     lines.push(`📍 Địa chỉ: ${restaurant.address}`);
   }
-  lines.push('');
-  lines.push('📋 THỰC ĐƠN CHI TIẾT & GIÁ CẢ:');
 
   if (restaurant.menu && restaurant.menu.length > 0) {
+    lines.push('');
+    lines.push('📋 THỰC ĐƠN & GIÁ CẢ:');
     restaurant.menu.forEach((item) => {
       const star = item.isSpecial ? ' ★ [Must-try]' : '';
       const note = item.note ? ` - ${item.note}` : '';
       lines.push(`• ${item.name} (${formatVND(item.price)})${star}${note}`);
     });
-  } else {
-    lines.push('• Đang cập nhật thực đơn...');
   }
 
   lines.push('');
@@ -233,8 +231,6 @@ export function filterRestaurants(restaurants: Restaurant[], filter: FilterState
         const ratingWeight: Record<RatingLevel, number> = { tot: 3, binh_thuong: 2, te: 1 };
         return ratingWeight[b.rating] - ratingWeight[a.rating];
       }
-      case 'dishCount':
-        return b.menu.length - a.menu.length;
       default:
         return 0;
     }

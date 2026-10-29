@@ -33,7 +33,7 @@ export interface Restaurant {
   updatedAt: string;
 }
 
-export type ViewMode = 'grid' | 'list' | 'feed' | 'dishSearch';
+export type ViewMode = 'grid' | 'list' | 'feed';
 
 export type RatingFilter = 'all' | RatingLevel;
 
@@ -41,6 +41,6 @@ export interface FilterState {
   searchQuery: string;
   rating: RatingFilter;
   tag: string;
-  searchMode: 'all' | 'dish' | 'restaurant';
-  sortBy: 'newest' | 'name' | 'rating' | 'dishCount';
+  searchMode?: 'all' | 'dish' | 'restaurant';
+  sortBy: 'newest' | 'name' | 'rating';
 }

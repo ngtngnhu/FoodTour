@@ -184,7 +184,7 @@ export const RestaurantPostCard: React.FC<RestaurantPostCardProps> = ({
             <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-zinc-50 dark:from-zinc-900 to-transparent flex items-end justify-center pb-2">
               <button
                 onClick={() => setIsExpanded(true)}
-                className="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-white/90 dark:bg-zinc-800/90 px-3 py-1 rounded-full border border-emerald-200 dark:border-emerald-800 shadow-xs hover:bg-emerald-50 cursor-pointer"
+                className="text-xs font-bold text-[#B82B55] bg-white px-3.5 py-1 rounded-full border border-[#FFC2D1] shadow-xs hover:bg-[#FFE5EC] cursor-pointer transition-colors"
               >
                 Xem toàn bộ bài viết &darr;
               </button>
@@ -196,54 +196,56 @@ export const RestaurantPostCard: React.FC<RestaurantPostCardProps> = ({
           <div className="text-center">
             <button
               onClick={() => setIsExpanded(false)}
-              className="text-xs font-medium text-zinc-500 hover:text-zinc-700 cursor-pointer"
+              className="text-xs font-semibold text-[#B82B55] hover:underline cursor-pointer"
             >
               Thu gọn bài viết &uarr;
             </button>
           </div>
         )}
 
-        {/* Quick Menu Dish Pills */}
-        <div className="space-y-1.5 pt-1">
-          <div className="flex items-center justify-between text-xs text-zinc-500">
-            <span className="font-semibold text-zinc-700 dark:text-zinc-300 flex items-center gap-1">
-              <UtensilsCrossed className="w-3.5 h-3.5 text-zinc-400" />
-              <span>Món tiêu biểu trong menu:</span>
-            </span>
-            <button
-              onClick={() => onSelect(restaurant)}
-              className="text-emerald-600 dark:text-emerald-400 hover:underline font-semibold text-xs cursor-pointer"
-            >
-              Xem thực đơn đầy đủ ({restaurant.menu.length} món) &rarr;
-            </button>
-          </div>
-
-          <div className="flex items-center gap-2 flex-wrap">
-            {restaurant.menu.slice(0, 4).map((dish) => (
-              <span
-                key={dish.id}
-                className="px-2.5 py-1 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-xs font-medium text-zinc-800 dark:text-zinc-200 flex items-center gap-1.5"
-              >
-                {dish.isSpecial && <span className="text-amber-500 text-[11px]">★</span>}
-                <span>{dish.name}</span>
-                <span className="font-bold text-emerald-600 dark:text-emerald-400 text-[11px]">
-                  {formatVND(dish.price)}
-                </span>
+        {/* Quick Menu Dish Pills (nếu có) */}
+        {restaurant.menu && restaurant.menu.length > 0 && (
+          <div className="space-y-1.5 pt-1">
+            <div className="flex items-center justify-between text-xs text-zinc-500">
+              <span className="font-semibold text-zinc-700 flex items-center gap-1">
+                <UtensilsCrossed className="w-3.5 h-3.5 text-[#FB6F92]" />
+                <span>Món tiêu biểu:</span>
               </span>
-            ))}
+              <button
+                onClick={() => onSelect(restaurant)}
+                className="text-[#B82B55] hover:underline font-bold text-xs cursor-pointer"
+              >
+                Xem chi tiết ({restaurant.menu.length} món) &rarr;
+              </button>
+            </div>
+
+            <div className="flex items-center gap-2 flex-wrap">
+              {restaurant.menu.slice(0, 4).map((dish) => (
+                <span
+                  key={dish.id}
+                  className="px-2.5 py-1 rounded-xl bg-white border border-[#FFC2D1] text-xs font-medium text-zinc-800 flex items-center gap-1.5 shadow-2xs"
+                >
+                  {dish.isSpecial && <span className="text-amber-500 text-[11px]">★</span>}
+                  <span>{dish.name}</span>
+                  <span className="font-bold text-[#B82B55] text-[11px]">
+                    {formatVND(dish.price)}
+                  </span>
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Post Footer Actions */}
-      <div className="px-5 py-3.5 bg-zinc-50/70 dark:bg-zinc-800/40 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
+      <div className="px-5 py-3.5 bg-[#FFF0F3] border-t border-[#FFC2D1] flex items-center justify-between">
         <div className="flex items-center gap-2">
           {restaurant.link && (
             <a
               href={restaurant.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 border border-zinc-200 dark:border-zinc-700 text-xs font-semibold text-zinc-700 dark:text-zinc-300 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-[#FFE5EC] border border-[#FFC2D1] text-xs font-bold text-[#B82B55] transition-colors"
             >
               <span>Mở Google Maps</span>
               <ExternalLink className="w-3.5 h-3.5" />
@@ -252,16 +254,16 @@ export const RestaurantPostCard: React.FC<RestaurantPostCardProps> = ({
 
           <button
             onClick={() => onSelect(restaurant)}
-            className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors cursor-pointer"
+            className="px-3.5 py-1.5 rounded-xl bg-[#FB6F92] hover:bg-[#E05377] text-white text-xs font-bold transition-colors cursor-pointer shadow-xs"
           >
-            Chi tiết quán &amp; Ảnh
+            Chi tiết quán & Ảnh
           </button>
         </div>
 
         <div className="flex items-center gap-1">
           <button
             onClick={handleCopyCaption}
-            className="p-2 text-zinc-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors cursor-pointer"
+            className="p-2 text-zinc-500 hover:text-[#FB6F92] hover:bg-[#FFE5EC] rounded-lg transition-colors cursor-pointer"
             title="Chia sẻ / Sao chép caption"
             aria-label="Chia sẻ caption"
           >

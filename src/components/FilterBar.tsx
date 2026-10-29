@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, X, LayoutGrid, List, UtensilsCrossed, ArrowUpDown, MessageSquareText } from 'lucide-react';
+import { Search, X, LayoutGrid, List, ArrowUpDown, MessageSquareText } from 'lucide-react';
 import { FilterState, RatingFilter, ViewMode } from '../types/restaurant';
 
 interface FilterBarProps {
@@ -24,99 +24,55 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   };
 
   return (
-    <div className="bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 py-3 px-4 sm:px-6 space-y-3">
+    <div className="bg-white/95 border-b border-[#FFC2D1] py-3.5 px-4 sm:px-6 space-y-3 shadow-2xs">
       {/* Top row: Search input + View modes */}
       <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
-        {/* Search bar with Mode Toggle */}
-        <div className="flex-1 max-w-2xl flex flex-col sm:flex-row gap-2">
-          <div className="relative flex-1">
-            <Search className="w-4 h-4 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              value={filter.searchQuery}
-              onChange={(e) => updateFilter({ searchQuery: e.target.value })}
-              placeholder={
-                filter.searchMode === 'dish'
-                  ? 'Tìm kiếm món ăn trong menu các quán (VD: phở, trà sữa, sườn...)'
-                  : filter.searchMode === 'restaurant'
-                  ? 'Tìm kiếm theo tên quán, địa chỉ, lý do...'
-                  : 'Tìm tên quán HOẶC món ăn trong menu...'
-              }
-              className="w-full pl-9 pr-8 py-2 text-sm bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all"
-            />
-            {filter.searchQuery && (
-              <button
-                onClick={() => updateFilter({ searchQuery: '' })}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
-                aria-label="Xóa tìm kiếm"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            )}
-          </div>
-
-          {/* Search mode pill switch */}
-          <div className="flex bg-zinc-100 dark:bg-zinc-800 p-0.5 rounded-lg text-xs self-start sm:self-auto shrink-0 border border-zinc-200 dark:border-zinc-700">
+        {/* Search bar */}
+        <div className="flex-1 max-w-2xl relative">
+          <Search className="w-4 h-4 text-[#FB6F92] absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <input
+            type="text"
+            value={filter.searchQuery}
+            onChange={(e) => updateFilter({ searchQuery: e.target.value })}
+            placeholder="Tìm kiếm tên quán, địa chỉ, lý do, bài viết review..."
+            className="w-full pl-9 pr-8 py-2 text-sm bg-[#FFF5F7] border border-[#FFC2D1] rounded-xl text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#FB6F92]/20 focus:border-[#FB6F92] transition-all"
+          />
+          {filter.searchQuery && (
             <button
-              onClick={() => updateFilter({ searchMode: 'all' })}
-              className={`px-2.5 py-1.5 rounded-md font-medium transition-all ${
-                filter.searchMode === 'all'
-                  ? 'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 shadow-xs'
-                  : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100'
-              }`}
+              onClick={() => updateFilter({ searchQuery: '' })}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600"
+              aria-label="Xóa tìm kiếm"
             >
-              Tất cả
+              <X className="w-4 h-4" />
             </button>
-            <button
-              onClick={() => updateFilter({ searchMode: 'dish' })}
-              className={`px-2.5 py-1.5 rounded-md font-medium transition-all flex items-center gap-1 ${
-                filter.searchMode === 'dish'
-                  ? 'bg-white dark:bg-zinc-700 text-emerald-600 dark:text-emerald-400 font-semibold shadow-xs'
-                  : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100'
-              }`}
-            >
-              <UtensilsCrossed className="w-3 h-3" />
-              Tìm trong Menu
-            </button>
-            <button
-              onClick={() => updateFilter({ searchMode: 'restaurant' })}
-              className={`px-2.5 py-1.5 rounded-md font-medium transition-all ${
-                filter.searchMode === 'restaurant'
-                  ? 'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 shadow-xs'
-                  : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100'
-              }`}
-            >
-              Tìm quán
-            </button>
-          </div>
+          )}
         </div>
 
         {/* View mode & Sort dropdown */}
         <div className="flex items-center gap-2.5 shrink-0 self-end md:self-auto">
           {/* Sort dropdown */}
-          <div className="flex items-center gap-1.5 text-xs text-zinc-500">
-            <ArrowUpDown className="w-3.5 h-3.5" />
+          <div className="flex items-center gap-1.5 text-xs text-[#B82B55]">
+            <ArrowUpDown className="w-3.5 h-3.5 text-[#FB6F92]" />
             <select
               value={filter.sortBy}
               onChange={(e) => updateFilter({ sortBy: e.target.value as FilterState['sortBy'] })}
-              className="py-1.5 px-2 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg text-xs text-zinc-700 dark:text-zinc-200 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+              className="py-1.5 px-2 bg-[#FFF5F7] border border-[#FFC2D1] rounded-xl text-xs text-zinc-700 focus:outline-none focus:ring-1 focus:ring-[#FB6F92]"
               aria-label="Sắp xếp danh sách"
             >
               <option value="newest">Mới nhất</option>
               <option value="rating">Đánh giá cao nhất</option>
               <option value="name">Tên quán (A - Z)</option>
-              <option value="dishCount">Nhiều món trong menu nhất</option>
             </select>
           </div>
 
           {/* View switcher */}
-          <div className="flex bg-zinc-100 dark:bg-zinc-800 p-0.5 rounded-lg text-xs border border-zinc-200 dark:border-zinc-700">
+          <div className="flex bg-[#FFE5EC] p-0.5 rounded-xl text-xs border border-[#FFC2D1]">
             <button
               onClick={() => onViewModeChange('grid')}
-              className={`p-1.5 rounded-md transition-all ${
+              className={`p-1.5 rounded-lg transition-all ${
                 viewMode === 'grid'
-                  ? 'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 shadow-xs'
-                  : 'text-zinc-500 hover:text-zinc-900'
+                  ? 'bg-[#FB6F92] text-white shadow-xs'
+                  : 'text-[#B82B55] hover:text-zinc-900'
               }`}
               title="Xem dạng thẻ lưới"
               aria-label="Xem dạng lưới"
@@ -125,10 +81,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             </button>
             <button
               onClick={() => onViewModeChange('list')}
-              className={`p-1.5 rounded-md transition-all ${
+              className={`p-1.5 rounded-lg transition-all ${
                 viewMode === 'list'
-                  ? 'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 shadow-xs'
-                  : 'text-zinc-500 hover:text-zinc-900'
+                  ? 'bg-[#FB6F92] text-white shadow-xs'
+                  : 'text-[#B82B55] hover:text-zinc-900'
               }`}
               title="Xem dạng danh sách chi tiết"
               aria-label="Xem dạng danh sách"
@@ -137,29 +93,16 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             </button>
             <button
               onClick={() => onViewModeChange('feed')}
-              className={`p-1.5 rounded-md transition-all flex items-center gap-1 ${
+              className={`p-1.5 rounded-lg transition-all flex items-center gap-1.5 px-2.5 ${
                 viewMode === 'feed'
-                  ? 'bg-white dark:bg-zinc-700 text-emerald-600 dark:text-emerald-400 font-bold shadow-xs'
-                  : 'text-zinc-500 hover:text-zinc-900'
+                  ? 'bg-[#FB6F92] text-white font-bold shadow-xs'
+                  : 'text-[#B82B55] hover:text-zinc-900'
               }`}
               title="Thực đơn dưới dạng bài viết (Caption)"
               aria-label="Xem dạng bài viết caption"
             >
               <MessageSquareText className="w-4 h-4" />
-              <span className="hidden lg:inline text-xs font-semibold">Bài viết (Caption)</span>
-            </button>
-            <button
-              onClick={() => onViewModeChange('dishSearch')}
-              className={`p-1.5 rounded-md transition-all flex items-center gap-1 ${
-                viewMode === 'dishSearch'
-                  ? 'bg-emerald-600 text-white shadow-xs'
-                  : 'text-zinc-500 hover:text-zinc-900'
-              }`}
-              title="Khám phá và tìm kiếm món ăn"
-              aria-label="Tìm kiếm món ăn"
-            >
-              <UtensilsCrossed className="w-4 h-4" />
-              <span className="hidden sm:inline font-medium">Tìm Món</span>
+              <span className="text-xs font-semibold">Bài viết (Caption)</span>
             </button>
           </div>
         </div>
@@ -173,10 +116,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
           <button
             onClick={() => updateFilter({ rating: 'all' })}
-            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer border ${
               filter.rating === 'all'
-                ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-xs'
-                : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300 hover:bg-zinc-200'
+                ? 'bg-[#FB6F92] text-white border-[#FB6F92] shadow-xs ring-2 ring-[#FFC2D1]'
+                : 'bg-[#FFE5EC] text-[#B82B55] border-[#FFC2D1] hover:bg-[#FFD7E2]'
             }`}
           >
             Tất cả mức
@@ -187,8 +130,8 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             onClick={() => updateFilter({ rating: 'tot' })}
             className={`px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer border ${
               filter.rating === 'tot'
-                ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs ring-2 ring-emerald-300 dark:ring-emerald-800'
-                : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 border-emerald-400/80 hover:bg-emerald-100'
+                ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs ring-2 ring-emerald-300'
+                : 'bg-emerald-50 text-emerald-700 border-emerald-400/80 hover:bg-emerald-100'
             }`}
           >
             <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
@@ -200,8 +143,8 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             onClick={() => updateFilter({ rating: 'binh_thuong' })}
             className={`px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer border ${
               filter.rating === 'binh_thuong'
-                ? 'bg-amber-500 text-white border-amber-500 shadow-xs ring-2 ring-amber-300 dark:ring-amber-800'
-                : 'bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300 border-amber-400 hover:bg-amber-100'
+                ? 'bg-amber-500 text-white border-amber-500 shadow-xs ring-2 ring-amber-300'
+                : 'bg-amber-50 text-amber-800 border-amber-400 hover:bg-amber-100'
             }`}
           >
             <span className="w-2 h-2 rounded-full bg-amber-500 inline-block"></span>
@@ -213,8 +156,8 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             onClick={() => updateFilter({ rating: 'te' })}
             className={`px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer border ${
               filter.rating === 'te'
-                ? 'bg-slate-600 text-white border-slate-600 shadow-xs ring-2 ring-slate-300 dark:ring-slate-700'
-                : 'bg-slate-100 text-slate-700 dark:bg-slate-800/80 dark:text-slate-300 border-slate-400 hover:bg-slate-200'
+                ? 'bg-slate-600 text-white border-slate-600 shadow-xs ring-2 ring-slate-300'
+                : 'bg-slate-100 text-slate-700 border-slate-400 hover:bg-slate-200'
             }`}
           >
             <span className="w-2 h-2 rounded-full bg-slate-500 inline-block"></span>
@@ -224,13 +167,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
         {/* Tag pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto w-full lg:w-auto scrollbar-none py-1">
-          <span className="text-xs text-zinc-400 font-medium mr-1 shrink-0 hidden sm:inline">Tag:</span>
+          <span className="text-xs text-[#B82B55] font-semibold mr-1 shrink-0 hidden sm:inline">Tag:</span>
           <button
             onClick={() => updateFilter({ tag: 'all' })}
-            className={`px-2.5 py-1 rounded-md text-xs shrink-0 font-medium transition-colors cursor-pointer ${
+            className={`px-2.5 py-1 rounded-lg text-xs shrink-0 font-semibold transition-colors cursor-pointer border ${
               filter.tag === 'all'
-                ? 'bg-zinc-800 text-white dark:bg-zinc-200 dark:text-zinc-900'
-                : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300 hover:bg-zinc-200'
+                ? 'bg-[#FB6F92] text-white border-[#FB6F92] shadow-2xs'
+                : 'bg-[#FFE5EC] text-[#B82B55] border-[#FFC2D1] hover:bg-[#FFD7E2]'
             }`}
           >
             Mọi thẻ
@@ -239,10 +182,10 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             <button
               key={tag}
               onClick={() => updateFilter({ tag: filter.tag === tag ? 'all' : tag })}
-              className={`px-2.5 py-1 rounded-md text-xs shrink-0 font-medium transition-colors cursor-pointer ${
+              className={`px-2.5 py-1 rounded-lg text-xs shrink-0 font-medium transition-colors cursor-pointer border ${
                 filter.tag === tag
-                  ? 'bg-emerald-600 text-white'
-                  : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700'
+                  ? 'bg-[#FB6F92] text-white border-[#FB6F92] shadow-2xs font-semibold'
+                  : 'bg-[#FFE5EC] text-[#B82B55] border-[#FFC2D1] hover:bg-[#FFD7E2]'
               }`}
             >
               #{tag}

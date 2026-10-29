@@ -3,6 +3,11 @@
 @theme {
   --font-sans: 'Be Vietnam Pro', 'Liberation Sans', sans-serif;
   --font-body: 'Be Vietnam Pro', 'Liberation Sans', sans-serif;
+  --color-soft-blush: #FFE5EC;
+  --color-pastel-pink: #FFC2D1;
+  --color-cherry-blossom: #FFB3C6;
+  --color-cotton-candy: #FF8FAB;
+  --color-petal-rouge: #FB6F92;
 }
 
 *, ::before, ::after {
@@ -11,6 +16,8 @@
 
 body {
   font-family: 'Be Vietnam Pro', 'Liberation Sans', sans-serif !important;
+  background-color: #FFF0F3;
+  color: #3f3f46;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

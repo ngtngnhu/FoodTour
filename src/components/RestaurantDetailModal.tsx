@@ -42,50 +42,9 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
   const [copiedCaption, setCopiedCaption] = useState(false);
   const [showCaptionBox, setShowCaptionBox] = useState(true);
   const captionContent = restaurant.menuCaption || generateMenuCaption(restaurant);
-  const [menuSearch, setMenuSearch] = useState('');
-  const [showAddDish, setShowAddDish] = useState(false);
-  const [newDishName, setNewDishName] = useState('');
-  const [newDishPrice, setNewDishPrice] = useState('');
-  const [newDishNote, setNewDishNote] = useState('');
-  const [newDishSpecial, setNewDishSpecial] = useState(false);
-
   const [showAddPhoto, setShowAddPhoto] = useState(false);
   const [newPhotoUrl, setNewPhotoUrl] = useState('');
   const [newPhotoCaption, setNewPhotoCaption] = useState('');
-
-  // Filter menu inside modal
-  const filteredMenu = restaurant.menu.filter(
-    (item) =>
-      item.name.toLowerCase().includes(menuSearch.toLowerCase()) ||
-      (item.note && item.note.toLowerCase().includes(menuSearch.toLowerCase()))
-  );
-
-  const handleAddDish = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newDishName.trim()) return;
-
-    const priceNum = parseInt(newDishPrice.replace(/\D/g, ''), 10) || 0;
-    const newItem: MenuItem = {
-      id: `dish-${Date.now()}`,
-      name: newDishName.trim(),
-      price: priceNum,
-      note: newDishNote.trim() || undefined,
-      isSpecial: newDishSpecial
-    };
-
-    const updated: Restaurant = {
-      ...restaurant,
-      menu: [...restaurant.menu, newItem],
-      updatedAt: new Date().toISOString()
-    };
-
-    onUpdateRestaurant(updated);
-    setNewDishName('');
-    setNewDishPrice('');
-    setNewDishNote('');
-    setNewDishSpecial(false);
-    setShowAddDish(false);
-  };
 
   const handleAddPhoto = (e: React.FormEvent) => {
     e.preventDefault();
@@ -204,7 +163,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                 href={restaurant.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-zinc-700 border border-emerald-300 dark:border-emerald-800 text-sm font-semibold shadow-xs transition-colors shrink-0"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-[#FB6F92] hover:bg-[#FFE5EC] border border-[#FFC2D1] text-sm font-bold shadow-xs transition-colors shrink-0"
               >
                 <span>Mở link quán / Maps</span>
                 <ExternalLink className="w-4 h-4" />
@@ -246,14 +205,14 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Camera className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                <h3 className="font-bold text-base text-zinc-900 dark:text-zinc-100">
+                <Camera className="w-4 h-4 text-[#FB6F92]" />
+                <h3 className="font-bold text-base text-zinc-900">
                   Hình ảnh món ăn thực tế ({restaurant.photos.length})
                 </h3>
               </div>
 
               <div className="flex items-center gap-2">
-                <label className="cursor-pointer px-3 py-1.5 text-xs font-medium rounded-lg bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200 flex items-center gap-1.5 transition-colors">
+                <label className="cursor-pointer px-3 py-1.5 text-xs font-semibold rounded-xl bg-[#FFE5EC] hover:bg-[#FFC2D1] text-[#B82B55] border border-[#FFC2D1] flex items-center gap-1.5 transition-colors shadow-2xs">
                   <Camera className="w-3.5 h-3.5" />
                   <span>Tải ảnh lên</span>
                   <input
@@ -266,7 +225,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
 
                 <button
                   onClick={() => setShowAddPhoto(!showAddPhoto)}
-                  className="px-3 py-1.5 text-xs font-medium rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 border border-emerald-200 dark:border-emerald-800 flex items-center gap-1 cursor-pointer"
+                  className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-[#FFE5EC] hover:bg-[#FFC2D1] text-[#B82B55] border border-[#FFC2D1] flex items-center gap-1 cursor-pointer transition-colors shadow-2xs"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Dán link ảnh</span>
@@ -278,7 +237,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
             {showAddPhoto && (
               <form
                 onSubmit={handleAddPhoto}
-                className="p-3 bg-zinc-50 dark:bg-zinc-800/60 rounded-xl border border-zinc-200 dark:border-zinc-700 space-y-2 text-xs"
+                className="p-3 bg-[#FFF5F7] rounded-2xl border border-[#FFC2D1] space-y-2 text-xs"
               >
                 <div className="flex gap-2">
                   <input
@@ -286,7 +245,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                     value={newPhotoUrl}
                     onChange={(e) => setNewPhotoUrl(e.target.value)}
                     placeholder="Dán URL hình ảnh món ăn thực tế..."
-                    className="flex-1 p-2 bg-white dark:bg-zinc-700 border border-zinc-200 dark:border-zinc-600 rounded-lg text-xs"
+                    className="flex-1 p-2 bg-white border border-[#FFC2D1] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#FB6F92]"
                     required
                   />
                   <input
@@ -294,11 +253,11 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                     value={newPhotoCaption}
                     onChange={(e) => setNewPhotoCaption(e.target.value)}
                     placeholder="Mô tả món (VD: Bát phở ngập thịt)"
-                    className="w-1/3 p-2 bg-white dark:bg-zinc-700 border border-zinc-200 dark:border-zinc-600 rounded-lg text-xs"
+                    className="w-1/3 p-2 bg-white border border-[#FFC2D1] rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#FB6F92]"
                   />
                   <button
                     type="submit"
-                    className="px-3 py-2 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 cursor-pointer"
+                    className="px-3.5 py-2 bg-[#FB6F92] hover:bg-[#E05377] text-white rounded-xl font-bold cursor-pointer transition-colors shadow-xs"
                   >
                     Thêm
                   </button>
@@ -308,10 +267,10 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
 
             {/* Photo grid */}
             {restaurant.photos.length === 0 ? (
-              <div className="p-8 text-center bg-zinc-50 dark:bg-zinc-800/40 rounded-xl border border-dashed border-zinc-200 dark:border-zinc-700">
-                <Camera className="w-8 h-8 text-zinc-400 mx-auto mb-2" />
-                <p className="text-xs text-zinc-500">Chưa có ảnh món ăn thực tế chụp tại quán.</p>
-                <p className="text-[11px] text-zinc-400 mt-1">
+              <div className="p-8 text-center bg-[#FFF5F7] rounded-2xl border border-dashed border-[#FFC2D1]">
+                <Camera className="w-8 h-8 text-[#FB6F92] mx-auto mb-2 opacity-70" />
+                <p className="text-xs font-semibold text-zinc-700">Chưa có ảnh món ăn thực tế chụp tại quán.</p>
+                <p className="text-[11px] text-[#B82B55] mt-1">
                   Hãy nhấn "Tải ảnh lên" hoặc "Dán link ảnh" để lưu giữ món ngon!
                 </p>
               </div>
@@ -321,7 +280,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                   <div
                     key={photo.id}
                     onClick={() => onOpenPhoto(photo.url, photo.caption)}
-                    className="relative group rounded-xl overflow-hidden aspect-video bg-zinc-100 dark:bg-zinc-800 cursor-pointer border border-zinc-200 dark:border-zinc-700 shadow-2xs hover:shadow-md transition-all"
+                    className="relative group rounded-xl overflow-hidden aspect-video bg-zinc-100 cursor-pointer border border-[#FFC2D1] shadow-2xs hover:shadow-md transition-all"
                   >
                     <img
                       src={photo.url}
@@ -340,11 +299,11 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
           </div>
 
           {/* Thực đơn dưới dạng bài viết (caption) */}
-          <div className="space-y-2.5 pt-2 border-t border-zinc-200 dark:border-zinc-800">
+          <div className="space-y-2.5 pt-2 border-t border-[#FFC2D1]">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <MessageSquareText className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                <h3 className="font-bold text-base text-zinc-900 dark:text-zinc-100">
+                <MessageSquareText className="w-4 h-4 text-[#FB6F92]" />
+                <h3 className="font-bold text-base text-zinc-900">
                   Thực đơn dưới dạng bài viết (Caption)
                 </h3>
               </div>
@@ -357,10 +316,10 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                     setCopiedCaption(true);
                     setTimeout(() => setCopiedCaption(false), 2000);
                   }}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg flex items-center gap-1.5 transition-all cursor-pointer border ${
+                  className={`px-3 py-1.5 text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all cursor-pointer border ${
                     copiedCaption
-                      ? 'bg-emerald-600 text-white border-emerald-600'
-                      : 'bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200 border-zinc-200 dark:border-zinc-700'
+                      ? 'bg-[#FB6F92] text-white border-[#FB6F92]'
+                      : 'bg-[#FFE5EC] hover:bg-[#FFC2D1] text-[#B82B55] border-[#FFC2D1]'
                   }`}
                   title="Sao chép bài viết này"
                 >
@@ -371,7 +330,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                     </>
                   ) : (
                     <>
-                      <Copy className="w-3.5 h-3.5 text-zinc-500" />
+                      <Copy className="w-3.5 h-3.5 text-[#B82B55]" />
                       <span>Sao chép Caption</span>
                     </>
                   )}
@@ -380,7 +339,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setShowCaptionBox(!showCaptionBox)}
-                  className="px-2.5 py-1.5 text-xs font-medium rounded-lg text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
+                  className="px-2.5 py-1.5 text-xs font-medium rounded-lg text-zinc-500 hover:text-zinc-800"
                 >
                   {showCaptionBox ? 'Thu gọn' : 'Xem'}
                 </button>
@@ -397,150 +356,61 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
           </div>
 
           {/* Menu Section */}
-          <div className="space-y-3 pt-2 border-t border-zinc-200 dark:border-zinc-800">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <UtensilsCrossed className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                <h3 className="font-bold text-base text-zinc-900 dark:text-zinc-100">
-                  Thực đơn quán ({restaurant.menu.length} món)
-                </h3>
-              </div>
-
-              <div className="flex items-center gap-2">
-                {/* Search in this menu */}
-                <div className="relative">
-                  <Search className="w-3.5 h-3.5 text-zinc-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="text"
-                    value={menuSearch}
-                    onChange={(e) => setMenuSearch(e.target.value)}
-                    placeholder="Tìm món trong quán..."
-                    className="pl-8 pr-3 py-1.5 text-xs bg-zinc-100 dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-                  />
+          <div className="space-y-3 pt-2 border-t border-[#FFC2D1]">
+            {/* Menu Section (Chỉ hiển thị nếu quán đã có sẵn món từ trước) */}
+            {restaurant.menu && restaurant.menu.length > 0 && (
+              <div className="space-y-3 pt-2 border-t border-[#FFC2D1]">
+                <div className="flex items-center gap-2">
+                  <UtensilsCrossed className="w-4 h-4 text-[#FB6F92]" />
+                  <h3 className="font-bold text-base text-zinc-900">
+                    Thực đơn ({restaurant.menu.length} món)
+                  </h3>
                 </div>
 
-                <button
-                  onClick={() => setShowAddDish(!showAddDish)}
-                  className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white flex items-center gap-1 cursor-pointer shrink-0"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>Thêm món</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Quick add dish form */}
-            {showAddDish && (
-              <form
-                onSubmit={handleAddDish}
-                className="p-3.5 bg-zinc-50 dark:bg-zinc-800/80 rounded-xl border border-emerald-300 dark:border-emerald-800 space-y-2.5"
-              >
-                <div className="font-semibold text-xs text-emerald-800 dark:text-emerald-300">
-                  Thêm món mới vào menu quán:
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                  <input
-                    type="text"
-                    value={newDishName}
-                    onChange={(e) => setNewDishName(e.target.value)}
-                    placeholder="Tên món ăn (VD: Phở xào bò)"
-                    className="p-2 bg-white dark:bg-zinc-700 border border-zinc-200 dark:border-zinc-600 rounded-lg"
-                    required
-                  />
-                  <input
-                    type="text"
-                    value={newDishPrice}
-                    onChange={(e) => setNewDishPrice(e.target.value)}
-                    placeholder="Giá tiền (VD: 65000)"
-                    className="p-2 bg-white dark:bg-zinc-700 border border-zinc-200 dark:border-zinc-600 rounded-lg"
-                    required
-                  />
-                  <input
-                    type="text"
-                    value={newDishNote}
-                    onChange={(e) => setNewDishNote(e.target.value)}
-                    placeholder="Ghi chú món (VD: Nhiều thịt, cay nhẹ)"
-                    className="p-2 bg-white dark:bg-zinc-700 border border-zinc-200 dark:border-zinc-600 rounded-lg sm:col-span-2"
-                  />
-                </div>
-                <div className="flex items-center justify-between pt-1">
-                  <label className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={newDishSpecial}
-                      onChange={(e) => setNewDishSpecial(e.target.checked)}
-                      className="rounded text-emerald-600 focus:ring-emerald-500"
-                    />
-                    <span>Đánh dấu là món đặc sắc (Must try / Best seller)</span>
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setShowAddDish(false)}
-                      className="px-3 py-1.5 text-xs text-zinc-500 hover:text-zinc-700"
+                <div className="divide-y divide-zinc-100 rounded-xl border border-zinc-200 overflow-hidden">
+                  {restaurant.menu.map((item) => (
+                    <div
+                      key={item.id}
+                      className="p-3 bg-white flex items-center justify-between gap-3 hover:bg-zinc-50 transition-colors"
                     >
-                      Hủy
-                    </button>
-                    <button
-                      type="submit"
-                      className="px-3.5 py-1.5 text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg"
-                    >
-                      Lưu món
-                    </button>
-                  </div>
-                </div>
-              </form>
-            )}
-
-            {/* Menu List */}
-            {filteredMenu.length === 0 ? (
-              <div className="p-6 text-center text-xs text-zinc-500 bg-zinc-50 dark:bg-zinc-800/40 rounded-xl">
-                Không tìm thấy món nào trong menu khớp với từ khóa "{menuSearch}".
-              </div>
-            ) : (
-              <div className="divide-y divide-zinc-100 dark:divide-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
-                {filteredMenu.map((item) => (
-                  <div
-                    key={item.id}
-                    className="p-3 bg-white dark:bg-zinc-900 flex items-center justify-between gap-3 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors"
-                  >
-                    <div>
-                      <div className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-                        {item.isSpecial && (
-                          <span
-                            className="px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 text-[10px] font-bold flex items-center gap-0.5"
-                            title="Món đặc sắc của quán"
-                          >
-                            <Sparkles className="w-2.5 h-2.5" />
-                            Đặc sắc
-                          </span>
+                      <div>
+                        <div className="font-semibold text-sm text-zinc-900 flex items-center gap-2">
+                          {item.isSpecial && (
+                            <span
+                              className="px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 text-[10px] font-bold flex items-center gap-0.5"
+                              title="Món đặc sắc của quán"
+                            >
+                              <Sparkles className="w-2.5 h-2.5" />
+                              Đặc sắc
+                            </span>
+                          )}
+                          <span>{item.name}</span>
+                        </div>
+                        {item.note && (
+                          <p className="text-xs text-zinc-500 mt-0.5">
+                            {item.note}
+                          </p>
                         )}
-                        <span>{item.name}</span>
                       </div>
-                      {item.note && (
-                        <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
-                          {item.note}
-                        </p>
-                      )}
+                      <span className="font-bold text-sm text-[#B82B55] shrink-0">
+                        {formatVND(item.price)}
+                      </span>
                     </div>
-                    <span className="font-bold text-sm text-emerald-700 dark:text-emerald-400 shrink-0">
-                      {formatVND(item.price)}
-                    </span>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             )}
           </div>
         </div>
 
         {/* Modal Footer */}
-        <div className="p-4 bg-zinc-50 dark:bg-zinc-800/50 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+        <div className="p-4 bg-[#FFF0F3] border-t border-[#FFC2D1] flex items-center justify-between">
           <div className="flex items-center gap-2">
             <button
               onClick={() => onEdit(restaurant)}
-              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-zinc-700 dark:text-zinc-200 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-lg hover:bg-zinc-100 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-[#B82B55] bg-white border border-[#FFC2D1] rounded-xl hover:bg-[#FFE5EC] cursor-pointer transition-colors shadow-2xs"
             >
-              <Edit2 className="w-3.5 h-3.5" />
+              <Edit2 className="w-3.5 h-3.5 text-[#FB6F92]" />
               <span>Chỉnh sửa thông tin</span>
             </button>
             <button
@@ -548,7 +418,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
                 onDelete(restaurant.id);
                 onClose();
               }}
-              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 rounded-xl transition-colors cursor-pointer"
             >
               <Trash2 className="w-3.5 h-3.5" />
               <span>Xóa quán này</span>
@@ -557,7 +427,7 @@ export const RestaurantDetailModal: React.FC<RestaurantDetailModalProps> = ({
 
           <button
             onClick={onClose}
-            className="px-5 py-2 text-xs font-semibold bg-zinc-800 hover:bg-zinc-900 text-white dark:bg-zinc-200 dark:text-zinc-900 rounded-lg cursor-pointer"
+            className="px-5 py-2 text-xs font-bold bg-[#FB6F92] hover:bg-[#E05377] text-white rounded-xl cursor-pointer shadow-xs transition-colors"
           >
             Đóng
           </button>

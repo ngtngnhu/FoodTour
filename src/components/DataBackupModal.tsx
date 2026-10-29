@@ -82,22 +82,22 @@ export const DataBackupModal: React.FC<DataBackupModalProps> = ({
       onClick={onClose}
     >
       <div
-        className="bg-white dark:bg-zinc-900 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-zinc-200 dark:border-zinc-800"
+        className="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-[#FFC2D1]"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
       >
-        <div className="p-6 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between bg-zinc-50 dark:bg-zinc-800/40">
+        <div className="p-6 border-b border-[#FFC2D1] flex items-center justify-between bg-[#FFF0F3]">
           <div>
-            <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50">
+            <h3 className="text-lg font-bold text-[#B82B55]">
               Sao lưu &amp; Nạp dữ liệu
             </h3>
-            <p className="text-xs text-zinc-500">
+            <p className="text-xs text-[#B82B55]/70">
               Xuất dữ liệu quán ăn ra máy tính hoặc nạp lại khi đổi trình duyệt
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-full hover:bg-zinc-200 text-zinc-500 cursor-pointer"
+            className="p-2 rounded-full hover:bg-[#FFE5EC] text-[#B82B55] cursor-pointer transition-colors"
             aria-label="Đóng"
           >
             <X className="w-5 h-5" />
@@ -106,14 +106,14 @@ export const DataBackupModal: React.FC<DataBackupModalProps> = ({
 
         <div className="p-6 space-y-5 text-xs">
           {/* Export */}
-          <div className="p-4 bg-zinc-50 dark:bg-zinc-800/50 rounded-2xl border border-zinc-200 dark:border-zinc-700 space-y-3">
+          <div className="p-4 bg-[#FFF5F7] rounded-2xl border border-[#FFC2D1] space-y-3">
             <div className="flex items-center justify-between">
-              <span className="font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wider text-[11px]">
+              <span className="font-bold text-zinc-800 uppercase tracking-wider text-[11px]">
                 Xuất file sao lưu ({restaurants.length} quán)
               </span>
               <button
                 onClick={handleCopy}
-                className="text-zinc-500 hover:text-zinc-900 flex items-center gap-1 text-[11px] font-medium"
+                className="text-[#B82B55] hover:text-[#962043] flex items-center gap-1 text-[11px] font-bold cursor-pointer"
               >
                 {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copied ? 'Đã sao chép' : 'Sao chép JSON'}</span>
@@ -122,7 +122,7 @@ export const DataBackupModal: React.FC<DataBackupModalProps> = ({
 
             <button
               onClick={handleDownloadFile}
-              className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+              className="w-full py-2.5 bg-[#FB6F92] hover:bg-[#E05377] text-white font-bold rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-xs transition-colors"
             >
               <Download className="w-4 h-4" />
               <span>Tải về file JSON sao lưu</span>
@@ -131,12 +131,12 @@ export const DataBackupModal: React.FC<DataBackupModalProps> = ({
 
           {/* Import */}
           <div className="space-y-3">
-            <span className="font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wider text-[11px] block">
+            <span className="font-bold text-zinc-800 uppercase tracking-wider text-[11px] block">
               Nạp dữ liệu từ file hoặc mã JSON
             </span>
 
             <div className="flex items-center gap-2">
-              <label className="flex-1 py-2 px-3 border border-zinc-200 dark:border-zinc-700 rounded-xl bg-zinc-50 dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-center font-medium cursor-pointer text-zinc-700 dark:text-zinc-200 flex items-center justify-center gap-2">
+              <label className="flex-1 py-2 px-3 border border-[#FFC2D1] rounded-xl bg-[#FFF5F7] hover:bg-[#FFE5EC] text-center font-bold cursor-pointer text-[#B82B55] flex items-center justify-center gap-2 transition-colors">
                 <Upload className="w-4 h-4" />
                 <span>Chọn file .JSON để nạp</span>
                 <input
@@ -153,7 +153,7 @@ export const DataBackupModal: React.FC<DataBackupModalProps> = ({
               onChange={(e) => setImportText(e.target.value)}
               placeholder="Hoặc dán nội dung JSON vào đây..."
               rows={4}
-              className="w-full p-2.5 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-xs font-mono"
+              className="w-full p-2.5 bg-[#FFF5F7] border border-[#FFC2D1] rounded-xl text-xs font-mono focus:outline-none focus:ring-2 focus:ring-[#FB6F92]"
             />
 
             {errorMsg && (
@@ -166,7 +166,7 @@ export const DataBackupModal: React.FC<DataBackupModalProps> = ({
             {importText && (
               <button
                 onClick={handleProcessImport}
-                className="w-full py-2.5 bg-zinc-800 hover:bg-zinc-900 text-white rounded-xl font-bold cursor-pointer"
+                className="w-full py-2.5 bg-[#FB6F92] hover:bg-[#E05377] text-white rounded-xl font-bold cursor-pointer transition-colors shadow-xs"
               >
                 Xác nhận nạp dữ liệu này
               </button>
