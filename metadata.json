@@ -1,0 +1,6 @@
+{
+  "name": "Nhật Ký Quán Ăn - Đánh Giá & Menu",
+  "description": "Ứng dụng đánh giá quán ăn 3 mức Tốt (xanh), Bình thường (vàng), Tệ (xám) kèm lý do, thực đơn menu, hình ảnh thực tế và tìm kiếm món ăn.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
